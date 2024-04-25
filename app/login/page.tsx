@@ -4,12 +4,8 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { SubmitButton } from './submit-button'
 
-export default function Login({
-  searchParams,
-}: {
-  searchParams: { message: string }
-}) {
-  const signIn = async (formData: FormData) => {
+export default function Login({ searchParams }: { searchParams: { message: string } }) {
+  async function signIn(formData: FormData) {
     'use server'
 
     const email = formData.get('email') as string
@@ -28,7 +24,7 @@ export default function Login({
     return redirect('/protected')
   }
 
-  const signUp = async (formData: FormData) => {
+  async function signUp(formData: FormData) {
     'use server'
 
     const origin = headers().get('origin')
@@ -109,9 +105,7 @@ export default function Login({
           Sign Up
         </SubmitButton>
         {searchParams?.message && (
-          <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-            {searchParams.message}
-          </p>
+          <p className="text-foreground text-left text-red-500">{searchParams.message}! Please try again.</p>
         )}
       </form>
     </div>
